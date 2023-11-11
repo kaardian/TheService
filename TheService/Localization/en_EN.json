@@ -1,0 +1,6 @@
+{
+  "ServiceStart": "Starting The One Service",
+  "ServiceStop": "Stopping The One Service",
+  "ServiceStarted": "Started The One Service",
+  "LaunchDebugger": "Launching debugger"
+}

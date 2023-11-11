@@ -1,0 +1,6 @@
+{
+  "ServiceStart": "Kaynnistettan The One Service",
+  "ServiceStop": "Pysaytetaan The One Service",
+  "ServiceStarted": "Kaynnistetty The One Service",
+  "LaunchDebugger": "Laukaistaan debuggeri"
+}

@@ -11,5 +11,8 @@
     <Setting Name="LaunchDebugger" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Localization" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">en_EN</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

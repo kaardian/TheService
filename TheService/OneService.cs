@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using TheService.Properties;
 using TheService.Models;
 
@@ -14,11 +9,17 @@ namespace TheService
 {
     public partial class OneService : ServiceBase
     {
+        // Instantiate the localized messages.
+        public static Messages LocalizedMessages;
+
         /// <summary>
         /// Constructor, start of the applicaiton.
         /// </summary>
         public OneService()
         {
+            // Uncomment this for debugging the launch of the service.
+            // System.Diagnostics.Debugger.Launch();
+
             InitializeComponent();
             this.ServiceName = Settings.Default.ServiceName;
             this.CanStop = true;
@@ -35,6 +36,33 @@ namespace TheService
             // Set the Event Log service and log name.
             this.EventLog.Source = this.ServiceName;
             this.EventLog.Log = Logger.LogLocation;
+
+            // Initialize the localization.
+            try
+            {
+                LocalizedMessages = new Messages();
+            }
+            catch (Exception ex)
+            {
+                this.EventLog.WriteEntry($"Failed to initialize localization.\n" +
+                    $"{ex.Message}\n" +
+                    $"{ex.StackTrace}",
+                    type: EventLogEntryType.Error);
+                Environment.Exit(0);
+            }
+
+            // Apply localization.
+            try
+            {
+                LocalizedMessages = Localization.ReadLocalization();
+            }
+            catch (Exception ex)
+            {
+                this.EventLog.WriteEntry($"Failed to read localization.\n" +
+                    $"{ex.Message}\n" +
+                    $"{ex.StackTrace}",
+                    type: EventLogEntryType.Error);
+            }
         }
 
         /// <summary>
@@ -45,15 +73,17 @@ namespace TheService
         {
             base.OnStart(args);
 
-            this.EventLog.WriteEntry("Starting The One Service");
+            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStart, type: EventLogEntryType.Information);
             
             // If debugging is enabled, and debugger is not connected, launch the debugger.
             if (Settings.Default.LaunchDebugger &&
                 !Debugger.IsAttached)
             {
-                this.EventLog.WriteEntry("Launching debugger");
+                this.EventLog.WriteEntry(LocalizedMessages.LaunchDebugger);
                 System.Diagnostics.Debugger.Launch();
             }
+
+            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStarted, type: EventLogEntryType.Information);
         }
 
         /// <summary>
@@ -61,7 +91,7 @@ namespace TheService
         /// </summary>
         protected override void OnStop()
         {
-            this.EventLog.WriteEntry("Stopping The One Service");
+            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStop, type: EventLogEntryType.Information);
         }
     }
 }

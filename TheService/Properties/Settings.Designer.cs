@@ -49,5 +49,14 @@ namespace TheService.Properties {
                 return ((bool)(this["LaunchDebugger"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en_EN")]
+        public string Localization {
+            get {
+                return ((string)(this["Localization"]));
+            }
+        }
     }
 }
