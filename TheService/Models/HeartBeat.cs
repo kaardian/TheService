@@ -1,11 +1,28 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using TheService.Properties;
 
 namespace TheService.Models
 {
+    [DataContract]
+    public class HeartBeatMessages
+    {
+        [DataMember]
+        public string Start { get; set; } = "Starting heartbeats";
+
+        [DataMember]
+        public string Stop { get; set; } = "Stopping heartbeats";
+
+        [DataMember]
+        public string Tick { get; set; } = "Heartbeat Tick";
+
+        [DataMember]
+        public string StartFailed { get; set; } = "Heartbeat start failed";
+    }
+
     internal static class HeartBeat
     {
         internal static CancellationTokenSource wtoken;

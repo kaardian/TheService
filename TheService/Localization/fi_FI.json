@@ -1,12 +1,12 @@
 {
-  "ServiceStart": "Kaynnistettan The One Service",
-  "ServiceStop": "Pysaytetaan The One Service",
-  "ServiceStarted": "Kaynnistetty The One Service",
-  "LaunchDebugger": "Laukaistaan debuggeri",
+  "ServiceStart": "Kaynnistettan The One Service.",
+  "ServiceStop": "Pysaytetaan The One Service.",
+  "ServiceStarted": "Kaynnistetty The One Service.",
+  "LaunchDebugger": "Laukaistaan debuggeri.",
   "HeartBeat": {
-    "Start": "Kaynnistetaan heartbeat",
-    "Stop": "Pysaytetaan heartbeat",
-    "Tick": "Heartbeat tick",
-    "StartFailed": "Heartbeat start failed"
+    "Start": "Kaynnistetaan heartbeat.",
+    "Stop": "Pysaytetaan heartbeat.",
+    "Tick": "Heartbeat tick.",
+    "StartFailed": "Heartbeat start failed."
   }
 }

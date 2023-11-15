@@ -97,6 +97,21 @@ namespace TheService
                 Environment.Exit(0);
             }
 
+
+            // Attempt starting the autoupdate. If this fails, will also shutdown the service.
+            try
+            {
+                AutoUpdate.Start(ServiceEnvironment);
+            }
+            catch (Exception ex)
+            {
+                ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.AutoUpdate.StartFailed +
+                    $"{ex.Message}\n" +
+                    $"{ex.StackTrace}",
+                    type: EventLogEntryType.Error);
+                Environment.Exit(0);
+            }
+
             ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.ServiceStarted, type: EventLogEntryType.Information);
         }
 
@@ -105,6 +120,8 @@ namespace TheService
         /// </summary>
         protected override void OnStop()
         {
+            base.OnStop();
+            AutoUpdate.Stop(ServiceEnvironment);
             HeartBeat.StopBeat(ServiceEnvironment);
             ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.ServiceStop, type: EventLogEntryType.Information);
         }

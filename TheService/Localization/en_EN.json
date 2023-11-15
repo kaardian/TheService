@@ -1,12 +1,21 @@
 {
-  "ServiceStart": "Starting The One Service",
-  "ServiceStop": "Stopping The One Service",
-  "ServiceStarted": "Started The One Service",
-  "LaunchDebugger": "Launching debugger",
+  "ServiceStart": "Starting The One Service.",
+  "ServiceStop": "Stopping The One Service.",
+  "ServiceStarted": "Started The One Service.",
+  "LaunchDebugger": "Launching debugger.",
   "HeartBeat": {
-    "Start": "Starting heartbeats",
-    "Stop": "Stopping heartbeats",
-    "Tick": "Heartbeat Tick",
-    "StartFailed": "Heartbeat start failed"
+    "Start": "Starting heartbeats.",
+    "Stop": "Stopping heartbeats.",
+    "Tick": "Heartbeat Tick.",
+    "StartFailed": "Heartbeat start failed."
+  },
+  "AutoUpdate": {
+    "Start": "Starting auto update service.",
+    "Stop": "Stopping auto update service.",
+    "UpdateCycle": "Auto update cycle starting.",
+    "StartFailed": "Auto update start failed.",
+    "UpdateCycleRunning": "Auto update cycle running already, skipping this cycle to let the previous one finish.",
+    "UpdatesNotEnabled": "Auto updates are not enabled, skipping update cycle.",
+    "UpdateCycleComplete": "Auto updates cycle completed."
   }
 }

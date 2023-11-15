@@ -6,6 +6,7 @@ namespace TheService.Models
     {
         public Messages LocalizedMessages { get; set; }
         public EventLog EventLog { get; set; }
+        public ServiceConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Service environment constructor.
@@ -14,6 +15,10 @@ namespace TheService.Models
 
             // Instantiate the localized messages.
             LocalizedMessages = new Messages();
+
+            // Instantiate the service configuration.
+            Configuration = new ServiceConfiguration();
+
         }
     }
 }

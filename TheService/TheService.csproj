@@ -53,6 +53,7 @@
     <Compile Include="Models\Localization.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\Messages.cs" />
+    <Compile Include="Models\ServiceConfiguration.cs" />
     <Compile Include="Models\ServiceEnvironment.cs" />
     <Compile Include="OneService.cs">
       <SubType>Component</SubType>

@@ -14,5 +14,11 @@
     <Setting Name="Localization" Type="System.String" Scope="Application">
       <Value Profile="(Default)">en_EN</Value>
     </Setting>
+    <Setting Name="UpdateInterval" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="AutoUpdateEnabled" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
