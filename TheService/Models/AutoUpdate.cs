@@ -124,10 +124,12 @@ namespace TheService.Models
 
             // Not updating, and enabled. Proceed to run the auto update.
             LastUpdated = DateTime.Now;
+            Updating = true;
 
             // TODO: Fetch new configuration set, and check if there is an update for any used moduled.
-            Thread.Sleep(10.SecondsToMilliseconds());
+            Thread.Sleep(70.SecondsToMilliseconds());
 
+            Updating = false;
             NextUpdate = DateTime.Now.AddSeconds(UpdateInterval);
 
             serviceEnvironment.EventLog.WriteEntry(serviceEnvironment.LocalizedMessages.AutoUpdate.UpdateCycleComplete, EventLogEntryType.Information);
