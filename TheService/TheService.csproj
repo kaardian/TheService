@@ -47,9 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AutoUpdate.cs" />
+    <Compile Include="Models\Extensions.cs" />
+    <Compile Include="Models\HeartBeat.cs" />
     <Compile Include="Models\Localization.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="Models\Messages.cs" />
+    <Compile Include="Models\ServiceEnvironment.cs" />
     <Compile Include="OneService.cs">
       <SubType>Component</SubType>
     </Compile>

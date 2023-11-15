@@ -9,8 +9,8 @@ namespace TheService
 {
     public partial class OneService : ServiceBase
     {
-        // Instantiate the localized messages.
-        public static Messages LocalizedMessages;
+        // Instantiate the service environment.
+        public static ServiceEnvironment ServiceEnvironment { get; set; }
 
         /// <summary>
         /// Constructor, start of the applicaiton.
@@ -37,14 +37,15 @@ namespace TheService
             this.EventLog.Source = this.ServiceName;
             this.EventLog.Log = Logger.LogLocation;
 
-            // Initialize the localization.
+            // Initialize the service environment.
             try
             {
-                LocalizedMessages = new Messages();
+                ServiceEnvironment = new ServiceEnvironment();
+                ServiceEnvironment.EventLog = this.EventLog;
             }
             catch (Exception ex)
             {
-                this.EventLog.WriteEntry($"Failed to initialize localization.\n" +
+                this.EventLog.WriteEntry($"Failed to initialize service environment.\n" +
                     $"{ex.Message}\n" +
                     $"{ex.StackTrace}",
                     type: EventLogEntryType.Error);
@@ -54,11 +55,11 @@ namespace TheService
             // Apply localization.
             try
             {
-                LocalizedMessages = Localization.ReadLocalization();
+                ServiceEnvironment.LocalizedMessages = Localization.ReadLocalization();
             }
             catch (Exception ex)
             {
-                this.EventLog.WriteEntry($"Failed to read localization.\n" +
+                this.EventLog.WriteEntry($"Failed to read localization. Using default values.\n" +
                     $"{ex.Message}\n" +
                     $"{ex.StackTrace}",
                     type: EventLogEntryType.Error);
@@ -73,17 +74,30 @@ namespace TheService
         {
             base.OnStart(args);
 
-            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStart, type: EventLogEntryType.Information);
+            ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.ServiceStart, type: EventLogEntryType.Information);
             
             // If debugging is enabled, and debugger is not connected, launch the debugger.
             if (Settings.Default.LaunchDebugger &&
                 !Debugger.IsAttached)
             {
-                this.EventLog.WriteEntry(LocalizedMessages.LaunchDebugger);
+                ServiceEnvironment.EventLog.WriteEntry(ServiceEnvironment.LocalizedMessages.LaunchDebugger);
                 System.Diagnostics.Debugger.Launch();
             }
 
-            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStarted, type: EventLogEntryType.Information);
+            // Attempt starting the Heartbeat. If this fails, will also shutdown the service.
+            try
+            {
+                HeartBeat.StartBeat(ServiceEnvironment);
+            }
+            catch (Exception ex) {
+                ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.HeartBeat.StartFailed +
+                    $"{ex.Message}\n" +
+                    $"{ex.StackTrace}",
+                    type: EventLogEntryType.Error);
+                Environment.Exit(0);
+            }
+
+            ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.ServiceStarted, type: EventLogEntryType.Information);
         }
 
         /// <summary>
@@ -91,7 +105,8 @@ namespace TheService
         /// </summary>
         protected override void OnStop()
         {
-            this.EventLog.WriteEntry(message: LocalizedMessages.ServiceStop, type: EventLogEntryType.Information);
+            HeartBeat.StopBeat(ServiceEnvironment);
+            ServiceEnvironment.EventLog.WriteEntry(message: ServiceEnvironment.LocalizedMessages.ServiceStop, type: EventLogEntryType.Information);
         }
     }
 }
